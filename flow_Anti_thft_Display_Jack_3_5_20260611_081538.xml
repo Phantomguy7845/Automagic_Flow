@@ -1,0 +1,227 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<data version="1.37.0">
+  <trigger type="wired_headset_plugged">
+    <useDefaultName>true</useDefaultName>
+    <name>Wired Headset Plugged</name>
+    <enabled>true</enabled>
+    <plugged>true</plugged>
+  </trigger>
+  <trigger type="wired_headset_plugged">
+    <useDefaultName>true</useDefaultName>
+    <name>Wired Headset Unplugged</name>
+    <enabled>true</enabled>
+    <plugged>false</plugged>
+  </trigger>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: if (step == null) step = 0; if (step &lt; global_soundc) { step = step + 1; return true; } else { step = null; return false; }</name>
+    <expression>if (step == null) step = 0;
+
+if (step &lt; global_soundc)
+{
+  step = step + 1;
+  return true;
+}
+else
+{ 
+  step = null;
+  return false;
+}</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: if((global_on == 1 and trigger == 'Wired Headset Plugged') or (global_on == 1 and trigger == 'Wired Headset Unplugged')) {true} else if((global_on != 1 and trigger == 'Wired Headset Plugged') or (global_on != 1 and trigger == 'Wired Headset Unplugged')) {false} else if(trigger == 'Wired Headset Plugged' or trigger == 'Wired Headset Unplugged'){exception}</name>
+    <expression>if((global_on == 1 and trigger == 'Wired Headset Plugged')
+or (global_on == 1 and trigger == 'Wired Headset Unplugged'))
+{true}
+else if((global_on != 1 and trigger == 'Wired Headset Plugged')
+or (global_on != 1 and trigger == 'Wired Headset Unplugged'))
+{false}
+else if(trigger == 'Wired Headset Plugged' or
+trigger == 'Wired Headset Unplugged'){exception}</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: if(trigger == 'Wired Headset Plugged' ) {global_soundc = 0;true} else if(trigger == 'Wired Headset Unplugged' ) {global_soundc = 9999;false}</name>
+    <expression>if(trigger == 'Wired Headset Plugged' )
+{global_soundc = 0;true}
+else if(trigger == 'Wired Headset Unplugged' )
+{global_soundc = 9999;false}</expression>
+  </condition>
+  <action type="clear_automagic_log">
+    <useDefaultName>false</useDefaultName>
+    <name>Clear PHANToM Log</name>
+  </action>
+  <action type="input_dialog">
+    <useDefaultName>true</useDefaultName>
+    <name>Input Dialog: PIN Settings Number ตั้งรหัส PIN</name>
+    <title>PIN Settings</title>
+    <inputDialogType>NUMBER</inputDialogType>
+    <prompt>ตั้งรหัส PIN</prompt>
+    <inputValues></inputValues>
+    <defaultValue>{global_pinlock}</defaultValue>
+    <titleFontSize>DEFAULT</titleFontSize>
+    <promptFontSize>DEFAULT</promptFontSize>
+    <fontSize>DEFAULT</fontSize>
+    <timeoutEnabled>false</timeoutEnabled>
+    <timeout>60000</timeout>
+    <defaultValueOnTimeout></defaultValueOnTimeout>
+    <showWhenLocked>false</showWhenLocked>
+    <turnScreenOn>true</turnScreenOn>
+    <keepScreenOn>true</keepScreenOn>
+    <enlargeDialogWidth>true</enlargeDialogWidth>
+    <keyboardCapitalizeSentences>false</keyboardCapitalizeSentences>
+  </action>
+  <action type="input_dialog">
+    <useDefaultName>true</useDefaultName>
+    <name>Input Dialog: Unlock Devices PIN </name>
+    <title>Unlock Devices</title>
+    <inputDialogType>PIN</inputDialogType>
+    <prompt></prompt>
+    <inputValues></inputValues>
+    <defaultValue></defaultValue>
+    <titleFontSize>DEFAULT</titleFontSize>
+    <promptFontSize>DEFAULT</promptFontSize>
+    <fontSize>DEFAULT</fontSize>
+    <timeoutEnabled>false</timeoutEnabled>
+    <timeout>60000</timeout>
+    <defaultValueOnTimeout></defaultValueOnTimeout>
+    <showWhenLocked>true</showWhenLocked>
+    <turnScreenOn>true</turnScreenOn>
+    <keepScreenOn>true</keepScreenOn>
+    <enlargeDialogWidth>true</enlargeDialogWidth>
+    <keyboardCapitalizeSentences>false</keyboardCapitalizeSentences>
+  </action>
+  <action type="notification_screen">
+    <useDefaultName>true</useDefaultName>
+    <name>Notification on Screen: {noti}</name>
+    <showText>true</showText>
+    <text>{noti}</text>
+    <widgetName></widgetName>
+    <width></width>
+    <height></height>
+    <stretchToFillArea>false</stretchToFillArea>
+    <opacity>1.00</opacity>
+    <durationLong>false</durationLong>
+    <customPosition>false</customPosition>
+    <gravityType>TOP_LEFT</gravityType>
+    <xOffset>0</xOffset>
+    <yOffset>0</yOffset>
+  </action>
+  <action type="script">
+    <useDefaultName>true</useDefaultName>
+    <name>Script: global_pinlock = value</name>
+    <script>global_pinlock = value</script>
+  </action>
+  <action type="script">
+    <useDefaultName>true</useDefaultName>
+    <name>Script: if(global_on != 1){global_on = 1} else if(global_on == 1){a=null;sqrt(a)}</name>
+    <script>if(global_on != 1){global_on = 1}
+else if(global_on == 1){a=null;sqrt(a)}</script>
+  </action>
+  <action type="script">
+    <useDefaultName>true</useDefaultName>
+    <name>Script: noti = "Wrong PIN"; if(value == global_pinlock){noti = "Device Unlock";global_on = 0 ;global_soundc = 0;a=null;sqrt(a)}</name>
+    <script>noti = "Wrong PIN";
+if(value == global_pinlock){noti = "Device Unlock";global_on = 0 ;global_soundc = 0;a=null;sqrt(a)}</script>
+  </action>
+  <action type="set_audio_stream_volume">
+    <useDefaultName>true</useDefaultName>
+    <name>Set Audio Stream Volume: Alarm to level 15</name>
+    <audioStreamType>ALARM</audioStreamType>
+    <audioStreamChangeType>ADJUST_SET_ABSOLUTE</audioStreamChangeType>
+    <volumeIndex>15</volumeIndex>
+    <playSound>false</playSound>
+    <showUI>false</showUI>
+  </action>
+  <action type="sound">
+    <useDefaultName>true</useDefaultName>
+    <name>Sound: Space Bell as Alarm</name>
+    <soundSourceType>BUILTIN</soundSourceType>
+    <alarmName>Space Bell</alarmName>
+    <uri>content://media/internal/audio/media/56?title=Space%20Bell&amp;canonical=1</uri>
+    <path></path>
+    <audioStreamType>ALARM</audioStreamType>
+    <startPosition></startPosition>
+    <showStopSoundNotification>false</showStopSoundNotification>
+    <waitForSoundToFinish>false</waitForSoundToFinish>
+    <requestAudioFocus>false</requestAudioFocus>
+    <audioFocusType>TRANSIENT</audioFocusType>
+  </action>
+  <action type="speech_output">
+    <useDefaultName>true</useDefaultName>
+    <name>Speech Output: เฮ่ย//ขโมยโทรศัพท์////ช่วยด้วยๆ//ขโมยๆ !</name>
+    <audioStreamType>ALARM</audioStreamType>
+    <text>เฮ่ย//ขโมยโทรศัพท์////ช่วยด้วยๆ//ขโมยๆ !</text>
+    <locale>th_TH</locale>
+    <usePitch>true</usePitch>
+    <pitch>1.0</pitch>
+    <useSpeechRate>true</useSpeechRate>
+    <speechRate>1.0</speechRate>
+    <embeddedSynthesis>false</embeddedSynthesis>
+    <networkSynthesis>true</networkSynthesis>
+    <showStopSpeechNotification>false</showStopSpeechNotification>
+    <requestAudioFocus>true</requestAudioFocus>
+    <audioFocusType>TRANSIENT</audioFocusType>
+  </action>
+  <action type="stop_action_sound">
+    <useDefaultName>true</useDefaultName>
+    <name>Stop Action Sound</name>
+  </action>
+  <action type="vibrate">
+    <useDefaultName>true</useDefaultName>
+    <name>Vibrate: Pattern 1 (-)</name>
+    <custom>false</custom>
+    <vibratePattern>vibrate_pattern_1</vibratePattern>
+    <customPattern></customPattern>
+  </action>
+  <flow type="flow">
+    <name>Anti-thft Display Jack 3.5</name>
+    <enabled>true</enabled>
+    <executionPolicy>PARALLEL</executionPolicy>
+    <actioncontainer id="t1" x="140.00003" y="507.49994">Script: if(global_on != 1){global_on = 1} else if(global_on == 1){a=null;sqrt(a)}</actioncontainer>
+    <actioncontainer id="t2" x="-70.000015" y="682.5">Script: global_pinlock = value</actioncontainer>
+    <actioncontainer id="t3" x="-69.999954" y="857.50024">Clear PHANToM Log</actioncontainer>
+    <actioncontainer id="t4" x="-70.00005" y="157.50006">Sound: Space Bell as Alarm</actioncontainer>
+    <conditioncontainer id="t5" x="140.00003" y="332.5">Expression: if(trigger == 'Wired Headset Plugged' ) {global_soundc = 0;true} else if(trigger == 'Wired Headset Unplugged' ) {global_soundc = 9999;false}</conditioncontainer>
+    <actioncontainer id="t6" x="-279.99994" y="157.50038">Speech Output: เฮ่ย//ขโมยโทรศัพท์////ช่วยด้วยๆ//ขโมยๆ !</actioncontainer>
+    <actioncontainer id="t7" x="-279.99994" y="857.5">Set Audio Stream Volume: Alarm to level 15</actioncontainer>
+    <conditioncontainer id="t8" x="-279.99997" y="507.49982">Expression: if (step == null) step = 0; if (step &lt; global_soundc) { step = step + 1; return true; } else { step = null; return false; }</conditioncontainer>
+    <conditioncontainer id="t9" x="-280.00015" y="682.50006">Expression: if((global_on == 1 and trigger == 'Wired Headset Plugged') or (global_on == 1 and trigger == 'Wired Headset Unplugged')) {true} else if((global_on != 1 and trigger == 'Wired Headset Plugged') or (global_on != 1 and trigger == 'Wired Headset Unplugged')) {false} else if(trigger == 'Wired Headset Plugged' or trigger == 'Wired Headset Unplugged'){exception}</conditioncontainer>
+    <triggercontainer id="t10" x="-280.00006" y="332.5">
+      <trigger>Wired Headset Plugged</trigger>
+      <trigger>Wired Headset Unplugged</trigger>
+    </triggercontainer>
+    <actioncontainer id="t11" x="139.99994" y="157.49998">Stop Action Sound</actioncontainer>
+    <actioncontainer id="t12" x="-69.99998" y="507.50003">Input Dialog: PIN Settings Number ตั้งรหัส PIN</actioncontainer>
+    <actioncontainer id="t13" x="140.00002" y="682.5">Input Dialog: Unlock Devices PIN </actioncontainer>
+    <actioncontainer id="t14" x="-70.000046" y="332.49994">Stop Action Sound</actioncontainer>
+    <actioncontainer id="t15" x="139.99985" y="857.5">Script: noti = "Wrong PIN"; if(value == global_pinlock){noti = "Device Unlock";global_on = 0 ;global_soundc = 0;a=null;sqrt(a)}</actioncontainer>
+    <actioncontainer id="t16" x="350.0" y="157.49988">Vibrate: Pattern 1 (-)</actioncontainer>
+    <actioncontainer id="t17" x="350.0" y="857.4999">Notification on Screen: {noti}</actioncontainer>
+    <connection from="t1" to="t13" type="EXCEPTION" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t1" to="t12" type="NORMAL" sourcePosition="WEST" targetPosition="EAST" />
+    <connection from="t2" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t4" to="t6" type="NORMAL" sourcePosition="WEST" targetPosition="EAST" />
+    <connection from="t4" to="t3" type="NORMAL" sourcePosition="EAST" targetPosition="EAST" />
+    <connection from="t5" to="t1" type="EXCEPTION" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t5" to="t11" type="FALSE" sourcePosition="NORTH" targetPosition="SOUTH" />
+    <connection from="t5" to="t14" type="TRUE" sourcePosition="WEST" targetPosition="EAST" />
+    <connection from="t6" to="t7" type="NORMAL" sourcePosition="EAST" targetPosition="SOUTH" />
+    <connection from="t7" to="t8" type="NORMAL" sourcePosition="SOUTH" targetPosition="WEST" />
+    <connection from="t8" to="t6" type="TRUE" sourcePosition="WEST" targetPosition="WEST" />
+    <connection from="t9" to="t5" type="TRUE" sourcePosition="WEST" targetPosition="NORTH" />
+    <connection from="t9" to="t1" type="EXCEPTION" sourcePosition="NORTH" targetPosition="SOUTH" />
+    <connection from="t9" to="t3" type="FALSE" sourcePosition="WEST" targetPosition="SOUTH" />
+    <connection from="t10" to="t9" type="NORMAL" sourcePosition="EAST" targetPosition="EAST" />
+    <connection from="t11" to="t4" type="NORMAL" sourcePosition="WEST" targetPosition="EAST" />
+    <connection from="t12" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t13" to="t15" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t14" to="t3" type="NORMAL" sourcePosition="WEST" targetPosition="SOUTH" />
+    <connection from="t15" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="SOUTH" />
+    <connection from="t15" to="t14" type="EXCEPTION" sourcePosition="WEST" targetPosition="EAST" />
+    <connection from="t15" to="t17" type="EXCEPTION" sourcePosition="EAST" targetPosition="WEST" />
+    <connection from="t15" to="t16" type="NORMAL" sourcePosition="SOUTH" targetPosition="WEST" />
+    <connection from="t16" to="t17" type="NORMAL" sourcePosition="WEST" targetPosition="WEST" />
+  </flow>
+</data>
